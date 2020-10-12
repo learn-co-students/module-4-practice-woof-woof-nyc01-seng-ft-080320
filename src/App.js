@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+import AllDogs from './Containers/AllDogs';
+import DogSummary from './Containers/DogSummary';
 import './App.css';
 
 function App() {
+  const [dog, setDog] = useState({});
+
+  const toggleGoodness = () => {
+    fetch(`http://localhost:3000/pups/${dog.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accepts": "application/json"
+      },
+      body: JSON.stringify({
+        isGoodDog: !dog.isGoodDog
+      })
+    })
+    .then(response => response.json())
+    .then(json => setDog(json))
+  }
+
   return (
     <div className="App">
-      <div id="filter-div">
-        <button id="good-dog-filter">Filter good dogs: OFF</button>
-      </div>
-      <div id="dog-bar">
-
-      </div>
-      <div id="dog-summary-container">
-        <h1>DOGGO:</h1>
-        <div id="dog-info">
-
-        </div>
-      </div>
+      <AllDogs appSetDog={setDog} />
+      <DogSummary dog={dog} toggleGoodness={toggleGoodness} />
     </div>
   );
 }
