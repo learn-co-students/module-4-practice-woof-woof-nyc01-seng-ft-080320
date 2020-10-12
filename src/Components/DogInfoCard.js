@@ -7,9 +7,9 @@ const DogInfoCard = (props) => {
 
 	const button = () => {
 		if (props.currentDog.isGoodDog) {
-			return <button onClick={localClickHandler}>Good Dog!</button>;
-		} else if (props.currentDog.isGoodDog === false) {
 			return <button onClick={localClickHandler}>Bad Dog!</button>;
+		} else if (props.currentDog.isGoodDog === false) {
+			return <button onClick={localClickHandler}>Good Dog!</button>;
 		}
 	};
 	if (props.currentDog !== {}) {

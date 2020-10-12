@@ -12,14 +12,29 @@ class DogHeaderContainer extends React.Component {
 	// 			api: dogs
 	// 		});
 	// 	});
+    // };
+    
+    renderDogs = () => {
+        if(this.props.filter){
+            const filtered = this.props.dogs.filter(dog => {
+                return dog.isGoodDog === true
+            })
+            return filtered.map(dog => {
+                return <DogHeaderCard clickHandler={this.props.clickHandler}key={dog.id} dog={dog}/>;
+            })
+        } else {
+            return this.props.dogs.map((dog) => {
+                return <DogHeaderCard clickHandler={this.props.clickHandler}key={dog.id} dog={dog}/>;
+            });
+        }
+    }
+	// renderDogs = () => {
+	// 	return this.props.dogs.map((dog) => {
+	// 		return <DogHeaderCard clickHandler={this.props.clickHandler}key={dog.id} dog={dog}/>;
+	// 	});
 	// };
-
-	renderDogs = () => {
-		return this.props.dogs.map((dog) => {
-			return <DogHeaderCard clickHandler={this.props.clickHandler}key={dog.id} dog={dog}/>;
-		});
-	};
 	render() {
+
 		return (
        <div>
 {this.renderDogs()}
