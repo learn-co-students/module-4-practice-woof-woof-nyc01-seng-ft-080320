@@ -1,23 +1,69 @@
 import React from 'react';
 import './App.css';
+import './index.css'
+import DogHeaderContainer from './Containers/DogHeaderContainer';
+import DogInfoContainer from './Containers/DogInfoContainer';
+import DogInfoCard from './Components/DogInfoCard';
 
-function App() {
-  return (
-    <div className="App">
-      <div id="filter-div">
-        <button id="good-dog-filter">Filter good dogs: OFF</button>
-      </div>
-      <div id="dog-bar">
+class App extends React.Component {
+    state = {
+        api: [],
+        currentDog: {}
+    }
 
-      </div>
-      <div id="dog-summary-container">
-        <h1>DOGGO:</h1>
-        <div id="dog-info">
+    componentDidMount = () => {
+        fetch('http://localhost:3000/pups')
+        .then(resp => resp.json())
+        .then(dogs => {
+            this.setState({
+                api: dogs
+            })
+        })
+    }
 
-        </div>
-      </div>
-    </div>
-  );
+    dogHeaderClickHandler = dogObj => {
+        this.setState({
+            currentDog: dogObj
+        })
+    }
+
+    goodOrBadClickHandler = (dogObj) => {
+        const options = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({isGoodDog: !dogObj.isGoodDog})
+        }
+        fetch(`http://localhost:3000/pups/${dogObj.id}`, options)
+        .then(resp => resp.json())
+        .then(dog => {
+            this.setState({
+                currentDog: dog
+            })
+           
+        })
+            // console.log(e.target)
+    }
+	render() {
+		return (
+			<div className="App">
+				<div id="filter-div">
+					<button id="good-dog-filter">Filter good dogs: OFF</button>
+				</div>
+				<div id="dog-bar">
+					<DogHeaderContainer  dogs={this.state.api}clickHandler={this.dogHeaderClickHandler}/>
+				</div>
+				<div id="dog-summary-container">
+					<h1>DOGGO:</h1>
+					<div id="dog-info">
+                        <DogInfoContainer clickHandler={this.goodOrBadClickHandler}currentDog={this.state.currentDog}/>
+                    </div>
+				</div>
+			</div>
+		);
+	}
 }
 
 export default App;
