@@ -37,8 +37,7 @@ class App extends React.Component {
 		};
 		fetch(`http://localhost:3000/pups/${dogObj.id}`, options).then((resp) => resp.json()).then((dog) => {
 			const newArr = [ ...this.state.api ];
-			const oldDog = newArr.find((dogX) => dogX === dogObj);
-			const index = newArr.indexOf(oldDog);
+			const index = newArr.indexOf(dogObj);
 			newArr[index] = dog;
 			this.setState({
 				api: newArr,
