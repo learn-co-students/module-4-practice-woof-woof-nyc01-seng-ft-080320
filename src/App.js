@@ -31,7 +31,7 @@ class App extends React.Component {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
-				Accept: 'application/json'
+				'Accept': 'application/json'
 			},
 			body: JSON.stringify({ isGoodDog: !dogObj.isGoodDog })
 		};
