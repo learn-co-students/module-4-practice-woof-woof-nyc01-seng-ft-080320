@@ -22,16 +22,21 @@
   align-items: center;
 }
 
-#dog-bar span {
+#dog-bar span{
   height: 80%;
   width: 8vw;
-  display: flex;
+  display: flexbox;
   justify-content: center;
   align-items: center;
   border-radius: 2em;
   border: 1px solid blue;
 }
 
+#dog-bar img {
+  height: 70%;
+  width: 7vw;
+  border-radius: 2.5em;
+}
 #dog-summary-container {
   height: 75vh;
   text-align: center;
