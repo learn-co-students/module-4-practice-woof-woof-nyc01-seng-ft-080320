@@ -1,11 +1,10 @@
 import React from 'react'
+import Dog from '../Components/Dog'
 
-const DogInfoContainer = () => {
+const DogInfoContainer = (props) => {
     return (<div id="dog-summary-container">
             <h1>DOGGO:</h1>
-            <div id="dog-info">
-
-            </div>
+            {props.dog ? <Dog dog={props.dog}/> : null }
         </div>
     )
 }
