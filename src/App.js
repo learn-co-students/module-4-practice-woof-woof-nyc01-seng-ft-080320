@@ -2,11 +2,13 @@ import React from 'react';
 import './App.css';
 import DogBar from './Components/DogBar'
 import DogInfoContainer from './Containers/DogInfoContainer'
+import FilterButton from './Components/FilterButton'
 
 class App extends React.Component {
     state = {
         dogList: [],
-        dogToShow: undefined
+        dogToShow: undefined,
+        filter: false
     }
 
     componentDidMount = () => {
@@ -47,13 +49,23 @@ class App extends React.Component {
             })
     }
 
+    filterClickHandler = () => {
+        this.setState(prevState => { 
+            return {filter: !prevState.filter }
+        })
+    }
+
+    filterGoodDogs = () => {
+        return this.state.dogList.filter(dog => dog.isGoodDog)
+    }
+
     render() {
         return (
             <div className="App">
-            <div id="filter-div">
-                <button id="good-dog-filter">Filter good dogs: OFF</button>
-            </div>
-            <DogBar dogList={this.state.dogList} showDog={this.showDog}/>
+            <FilterButton filter={this.state.filter} clickHandler={this.filterClickHandler}/>
+            <DogBar dogList={this.state.filter === false ? this.state.dogList : this.filterGoodDogs()} 
+                showDog={this.showDog}
+            />
             <DogInfoContainer dog={this.state.dogToShow} clickHandler={this.clickHandler}/>
             </div>
         );
