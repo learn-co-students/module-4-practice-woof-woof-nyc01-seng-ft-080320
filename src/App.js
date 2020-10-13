@@ -1,23 +1,30 @@
 import React from 'react';
 import './App.css';
+import DogBar from './Components/DogBar'
+import DogInfoContainer from './Containers/DogInfoContainer'
 
-function App() {
-  return (
-    <div className="App">
-      <div id="filter-div">
-        <button id="good-dog-filter">Filter good dogs: OFF</button>
-      </div>
-      <div id="dog-bar">
+class App extends React.Component {
+    state = {
+        dogList: [],
+    }
 
-      </div>
-      <div id="dog-summary-container">
-        <h1>DOGGO:</h1>
-        <div id="dog-info">
+    componentDidMount = () => {
+        fetch('http://localhost:3000/pups/')
+            .then(resp => resp.json())
+            .then(dogApi => this.setState({dogList: dogApi}))
+    }
 
-        </div>
-      </div>
-    </div>
-  );
+    render() {
+        return (
+            <div className="App">
+            <div id="filter-div">
+                <button id="good-dog-filter">Filter good dogs: OFF</button>
+            </div>
+            <DogBar dogList={this.state.dogList}/>
+            <DogInfoContainer />
+            </div>
+        );
+    }
 }
 
 export default App;
