@@ -9,7 +9,8 @@ class App extends React.Component {
   state={
     dogsURL: "http://localhost:3000/pups/",
     dogs: [],
-    currentDog: {}
+    currentDog: {},
+    filtered: false
   }
 
   fetchDogs() {
@@ -28,11 +29,19 @@ class App extends React.Component {
     this.setState({currentDog: dog})
   }
 
+  filterDogs = () => {
+    this.setState(prevState => {
+      return {
+        filtered: !prevState.filtered
+      }
+    })
+  }
+
   render() {
     return (
       <div className="App">
-        <GoodDogFilter />
-        <DogList dogs={this.state.dogs} selectDog={this.selectDog}/>
+        <GoodDogFilter filtered={this.state.filtered} filterDogs={this.filterDogs}/>
+        <DogList dogs={this.state.dogs} selectDog={this.selectDog} filtered={this.state.filtered}/>
         <BigDogCard dog={this.state.currentDog} />
       </div>
     );

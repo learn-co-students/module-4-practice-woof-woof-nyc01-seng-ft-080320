@@ -4,7 +4,11 @@ import SmallDogCard from '../Components/SmallDogCard'
 class DogList extends React.Component {
 
     renderDogs() {
-        return this.props.dogs.map(dog => <SmallDogCard dog={dog} key={dog.id} selectDog={this.props.selectDog}/>)
+        if (this.props.filtered) {
+            return this.props.dogs.filter(dog => dog.isGoodDog).map(dog => <SmallDogCard dog={dog} key={dog.id} selectDog={this.props.selectDog}/>)
+        } else {
+            return this.props.dogs.map(dog => <SmallDogCard dog={dog} key={dog.id} selectDog={this.props.selectDog}/>)
+        }
     }
 
     render() {
