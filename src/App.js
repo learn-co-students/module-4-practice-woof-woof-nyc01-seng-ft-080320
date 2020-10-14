@@ -37,12 +37,34 @@ class App extends React.Component {
     })
   }
 
+  trainDog = (newDog) => {
+
+    let fetchOptions = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accepts": "application/json"
+      },
+      body: JSON.stringify({isGoodDog: !newDog.isGoodDog})
+    }
+
+    fetch(this.state.dogsURL+newDog.id, fetchOptions)
+    .then(resp => resp.json())
+    .then(changedDog => {
+      console.log("dog from db: ",changedDog)
+        let updatedDogs = [...this.state.dogs]
+        let oldDogIndex = updatedDogs.findIndex(dog => dog.id === newDog.id)
+        updatedDogs.splice(oldDogIndex, 1, changedDog)
+        this.setState({dogs: updatedDogs, currentDog: changedDog})
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <GoodDogFilter filtered={this.state.filtered} filterDogs={this.filterDogs}/>
         <DogList dogs={this.state.dogs} selectDog={this.selectDog} filtered={this.state.filtered}/>
-        <BigDogCard dog={this.state.currentDog} />
+        <BigDogCard dog={this.state.currentDog} trainDog={this.trainDog} />
       </div>
     );
   }

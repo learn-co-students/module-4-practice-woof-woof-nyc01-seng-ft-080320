@@ -3,6 +3,10 @@ import React from 'react'
 
 class BigDogCard extends React.Component {
 
+    trainDog = () => {
+        this.props.trainDog(this.props.dog)
+    }
+
     render() {
         if (this.props.dog.name) {
             return (
@@ -12,7 +16,7 @@ class BigDogCard extends React.Component {
                         <div id="dog-info">
                             <img src={this.props.dog.image} alt={this.props.dog.name} />
                             <h2>{this.props.dog.name}</h2>
-                            <button>Good Dog!</button>
+                            <button onClick={this.trainDog}>{this.props.dog.isGoodDog ? "Bad Dog!" : "Good Dog!"}</button>
                         </div>
                     </div>
                 </React.Fragment>
